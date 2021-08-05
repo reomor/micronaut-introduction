@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <withJansi>false</withJansi>
+        <!-- encoders are assigned the type ch.qos.logback.classic.encoder.PatternLayoutEncoder by default -->
+        <encoder>
+            <pattern>%cyan(%d{HH:mm:ss.SSS}) %gray([%thread]) %highlight(%-5level) %magenta(%logger{36}) - %msg%n
+            </pattern>
+        </encoder>
+    </appender>
+
+    <appender name="STASH" class="net.logstash.logback.appender.LogstashTcpSocketAppender">
+        <keepAliveDuration>5 minutes</keepAliveDuration>
+        <reconnectionDelay>10 second</reconnectionDelay>
+        <ringBufferSize>16384</ringBufferSize>
+        <destination>127.0.0.1:9601</destination>
+        <connectionStrategy>
+            <preferPrimary>
+                <secondaryConnectionTTL>5 minutes</secondaryConnectionTTL>
+            </preferPrimary>
+        </connectionStrategy>
+        <encoder class="net.logstash.logback.encoder.LoggingEventCompositeJsonEncoder">
+            <providers>
+                <timestamp>
+                    <timeZone>UTC</timeZone>
+                </timestamp>
+                <mdc>
+                    <excludeMdcKeyName>X-B3-SpanId</excludeMdcKeyName>
+                    <excludeMdcKeyName>X-B3-TraceId</excludeMdcKeyName>
+                    <excludeMdcKeyName>X-Span-Export</excludeMdcKeyName>
+                </mdc>
+                <logLevel/>
+                <loggerName/>
+                <threadName/>
+                <message/>
+                <logstashMarkers/>
+                <arguments/>
+
+                <stackTrace>
+                    <fieldName>stackTrace</fieldName>
+                    <throwableConverter class="net.logstash.logback.stacktrace.ShortenedThrowableConverter">
+                        <inlineHash>true</inlineHash>
+                        <exclusions>${STE_EXCLUSIONS}</exclusions>
+                    </throwableConverter>
+                </stackTrace>
+                <stackHash>
+                    <exclusions>${STE_EXCLUSIONS}</exclusions>
+                </stackHash>
+                <pattern>
+                    <pattern>
+                        {
+                            "customParam": "paramValue"
+                        }
+                    </pattern>
+                </pattern>
+            </providers>
+        </encoder>
+    </appender>
+
+    <appender name="ACCESS_STASH" class="net.logstash.logback.appender.LogstashAccessTcpSocketAppender">
+        <destination>127.0.0.1:9601</destination>
+        <encoder class="net.logstash.logback.encoder.LogstashAccessEncoder" />
+    </appender>
+
+    <root level="DEBUG">
+        <appender-ref ref="STDOUT"/>
+<!--        <appender-ref ref="STASH"/>-->
+<!--        <appender-ref ref="ACCESS_STASH"/>-->
+    </root>
+</configuration>
