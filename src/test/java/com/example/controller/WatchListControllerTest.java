@@ -1,8 +1,8 @@
 package com.example.controller;
 
+import com.example.client.JwtWatchListClient;
 import com.example.domain.Symbol;
 import com.example.domain.WatchList;
-import com.example.error.RestError;
 import com.example.repository.AccountStore;
 import io.micronaut.http.HttpRequest;
 import io.micronaut.http.HttpResponse;
@@ -16,6 +16,7 @@ import io.micronaut.runtime.EmbeddedApplication;
 import io.micronaut.security.authentication.UsernamePasswordCredentials;
 import io.micronaut.security.token.jwt.render.BearerAccessRefreshToken;
 import io.micronaut.test.extensions.junit5.annotation.MicronautTest;
+import io.reactivex.Single;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 
@@ -42,6 +43,10 @@ class WatchListControllerTest {
     RxHttpClient httpClient;
 
     @Inject
+    @Client("/")
+    JwtWatchListClient client;
+
+    @Inject
     AccountStore accountStore;
 
     @Test
@@ -58,17 +63,10 @@ class WatchListControllerTest {
     @Test
     void getWatchList_empty() {
 
-        BearerAccessRefreshToken token = getAccessToken();
-
-        log.info("Bearer: {}", token);
-
         accountStore.deleteWatchList(ACCOUNT_ID);
-        MutableHttpRequest<Object> getRequest = HttpRequest.GET("/account/watchlist")
-            .accept(MediaType.APPLICATION_JSON)
-            .bearerAuth(token.getAccessToken());
+        Single<WatchList> response = client.retrieve(getAuthorizationHeader()).singleOrError();
 
-        WatchList watchList = httpClient.toBlocking().retrieve(getRequest, WatchList.class);
-
+        var watchList = response.blockingGet();
         assertTrue(watchList.getSymbols().isEmpty());
         assertTrue(accountStore.getWatchList(ACCOUNT_ID).getSymbols().isEmpty());
     }
@@ -76,18 +74,12 @@ class WatchListControllerTest {
     @Test
     void getWatchList_notEmpty() {
 
-        BearerAccessRefreshToken token = getAccessToken();
-
         List<Symbol> symbols = Stream.of("BOM", "BAM")
             .map(Symbol::new)
             .collect(Collectors.toList());
         accountStore.updateWatchList(ACCOUNT_ID, new WatchList(symbols));
 
-        MutableHttpRequest<Object> getRequest = HttpRequest.GET("/account/watchlist")
-            .accept(MediaType.APPLICATION_JSON)
-            .bearerAuth(token.getAccessToken());
-
-        WatchList watchList = httpClient.toBlocking().retrieve(getRequest, WatchList.class);
+        WatchList watchList = client.retrieve(getAuthorizationHeader()).singleOrError().blockingGet();
 
         assertEquals(symbols.size(), watchList.getSymbols().size());
         assertEquals(symbols.size(), accountStore.getWatchList(ACCOUNT_ID).getSymbols().size());
@@ -96,18 +88,13 @@ class WatchListControllerTest {
     @Test
     void updateWatchList() {
 
-        BearerAccessRefreshToken token = getAccessToken();
-
         List<Symbol> symbols = Stream.of("BOM", "BAM")
             .map(Symbol::new)
             .collect(Collectors.toList());
 
         WatchList expectedWatchList = new WatchList(symbols);
-        MutableHttpRequest<WatchList> putRequest = HttpRequest.PUT("/account/watchlist", expectedWatchList)
-            .accept(MediaType.APPLICATION_JSON)
-            .bearerAuth(token.getAccessToken());
 
-        HttpResponse<WatchList> response = httpClient.toBlocking().exchange(putRequest, WatchList.class);
+        HttpResponse<WatchList> response = client.put(getAuthorizationHeader(), expectedWatchList);
 
         Optional<WatchList> actualWatchList = response.getBody();
         assertTrue(actualWatchList.isPresent());
@@ -118,18 +105,13 @@ class WatchListControllerTest {
     @Test
     void deleteWatchList() {
 
-        BearerAccessRefreshToken token = getAccessToken();
-
         List<Symbol> symbols = Stream.of("BOM", "BAM")
             .map(Symbol::new)
             .collect(Collectors.toList());
         WatchList expectedWatchList = new WatchList(symbols);
         accountStore.updateWatchList(ACCOUNT_ID, new WatchList(symbols));
 
-        MutableHttpRequest<Object> deleteRequest = HttpRequest.DELETE("/account/watchlist/" + ACCOUNT_ID)
-            .accept(MediaType.APPLICATION_JSON)
-            .bearerAuth(token.getAccessToken());
-        HttpResponse<WatchList> response = httpClient.toBlocking().exchange(deleteRequest, WatchList.class);
+        HttpResponse<WatchList> response = client.delete(getAuthorizationHeader(), ACCOUNT_ID);
 
         Optional<WatchList> actualWatchList = response.getBody();
         assertTrue(actualWatchList.isPresent());
@@ -138,12 +120,11 @@ class WatchListControllerTest {
         assertTrue(accountStore.getWatchList(ACCOUNT_ID).getSymbols().isEmpty());
     }
 
-    private BearerAccessRefreshToken getAccessToken() {
+    private BearerAccessRefreshToken getBearerToken() {
+       return client.login(new UsernamePasswordCredentials("myuser", "secret"));
+    }
 
-        UsernamePasswordCredentials credentials = new UsernamePasswordCredentials("myuser", "secret");
-        MutableHttpRequest<UsernamePasswordCredentials> loginRequest = HttpRequest.POST("/login", credentials);
-        HttpResponse<BearerAccessRefreshToken> tokenHttpResponse = httpClient.toBlocking().exchange(loginRequest, BearerAccessRefreshToken.class);
-
-        return tokenHttpResponse.body();
+    private String getAuthorizationHeader() {
+        return "Bearer " + getBearerToken().getAccessToken();
     }
 }
