@@ -17,7 +17,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.inject.Singleton;
-import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 @Singleton
 public class JdbcAuthenticationProvider implements AuthenticationProvider {
@@ -46,7 +47,16 @@ public class JdbcAuthenticationProvider implements AuthenticationProvider {
           .map(UserEntity::getPassword)
           .filter(password -> secret != null && secret.equals(password))
           .ifPresentOrElse(password -> {
-              emitter.onNext(new UserDetails(identity, new ArrayList<>()));
+              emitter.onNext(
+                new UserDetails(
+                  identity,
+                  List.of("ROLE_USER", "ROLE_NONUSER"),
+                  Map.of(
+                    "locale", "en",
+                    "sex", "M"
+                  )
+                )
+              );
               emitter.onComplete();
             },
             () -> emitter.onError(
