@@ -11,8 +11,8 @@ import io.swagger.v3.oas.annotations.info.Info;
         description = "My API"
     )
 )
-public class Application {
+public class MainApplication {
     public static void main(String[] args) {
-        Micronaut.run(Application.class, args);
+        Micronaut.run(MainApplication.class, args);
     }
 }
