@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration>
+
+  <properties>
+    <property name="defaultpattern">logdate=(%d{ISO8601}) thread=(%thread)) level=(%level) loggerclass=(%logger{36}) message=(%msg)%n</property>
+  </properties>
+
+  <Appenders>
+    <Console name="LogToConsole" target="SYSTEM_OUT">
+      <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
+    </Console>
+    <Socket name="logstash" host="localhost" port="9601">
+<!--      <PatternLayout pattern="${defaultpattern}" charset="UTF-8" />-->
+      <JsonTemplateLayout eventTemplateUri="classpath:LogstashJsonEventLayoutV1.json"/>
+    </Socket>
+    <Async name="LogstashAsync" bufferSize="204800">
+      <AppenderRef ref="logstash" />
+    </Async>
+  </Appenders>
+
+  <Loggers>
+    <Logger name="com.example" level="debug" additivity="false">
+      <AppenderRef ref="LogToConsole"/>
+      <AppenderRef ref="LogstashAsync"/>
+    </Logger>
+    <Root level="info">
+      <AppenderRef ref="LogToConsole"/>
+      <AppenderRef ref="LogstashAsync"/>
+    </Root>
+  </Loggers>
+
+</Configuration>
