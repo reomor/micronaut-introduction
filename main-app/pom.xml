@@ -4,7 +4,7 @@
 
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.example</groupId>
-  <artifactId>demo</artifactId>
+  <artifactId>main-app</artifactId>
   <version>0.1</version>
   <packaging>${packaging}</packaging>
 
@@ -72,6 +72,11 @@
     </dependency>
 
     <dependency>
+      <groupId>ch.qos.logback</groupId>
+      <artifactId>logback-classic</artifactId>
+      <scope>runtime</scope>
+    </dependency>
+    <dependency>
       <groupId>org.apache.logging.log4j</groupId>
       <artifactId>log4j-api</artifactId>
       <version>${log4j.version}</version>
@@ -79,11 +84,6 @@
     <dependency>
       <groupId>org.apache.logging.log4j</groupId>
       <artifactId>log4j-core</artifactId>
-      <version>${log4j.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.logging.log4j</groupId>
-      <artifactId>log4j-slf4j-impl</artifactId>
       <version>${log4j.version}</version>
     </dependency>
     <dependency>
@@ -180,7 +180,7 @@
               -J-Dmicronaut.openapi.views.spec=rapidoc.enabled=true,redoc.enabled=true,swagger-ui.enabled=true,swagger-ui.theme=flattop
             </arg>
             <arg>-Amicronaut.processing.group=com.example</arg>
-            <arg>-Amicronaut.processing.module=demo</arg>
+            <arg>-Amicronaut.processing.module=main-app</arg>
           </compilerArgs>
         </configuration>
       </plugin>
