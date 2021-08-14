@@ -3,8 +3,8 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
     <modelVersion>4.0.0</modelVersion>
-    <groupId>com.example</groupId>
-    <artifactId>demo</artifactId>
+    <groupId>com.github.reomor</groupId>
+    <artifactId>main-app</artifactId>
     <version>0.1</version>
     <packaging>${packaging}</packaging>
 
@@ -20,7 +20,7 @@
         <release.version>11</release.version>
         <micronaut.version>2.5.11</micronaut.version>
         <lombok.version>1.18.20</lombok.version>
-        <exec.mainClass>com.example.MainApplication</exec.mainClass>
+        <exec.mainClass>com.github.reomor.MainApplication</exec.mainClass>
         <micronaut.runtime>netty</micronaut.runtime>
         <assertj-core.version>3.20.2</assertj-core.version>
     </properties>
@@ -187,8 +187,8 @@
                     <fork>true</fork>
                     <compilerArgs>
                         <arg>-J-Dmicronaut.openapi.views.spec=rapidoc.enabled=true,redoc.enabled=true,swagger-ui.enabled=true,swagger-ui.theme=flattop</arg>
-                        <arg>-Amicronaut.processing.group=com.example</arg>
-                        <arg>-Amicronaut.processing.module=demo</arg>
+                        <arg>-Amicronaut.processing.group=com.github.reomor</arg>
+                        <arg>-Amicronaut.processing.module=main-app</arg>
                     </compilerArgs>
                 </configuration>
             </plugin>

@@ -1,5 +1,5 @@
 applicationType: default
-defaultPackage: com.example
+defaultPackage: com.github.reomor
 testFramework: junit
 sourceLanguage: java
 buildTool: maven

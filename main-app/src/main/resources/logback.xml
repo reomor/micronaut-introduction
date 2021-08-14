@@ -64,7 +64,7 @@
 <!--        <encoder class="net.logstash.logback.encoder.LogstashAccessEncoder" />-->
 <!--    </appender>-->
 
-    <logger name="com.example" level="DEBUG"/>
+    <logger name="com.github.reomor" level="DEBUG"/>
     <logger name="org.flywaydb.core" level="INFO"/>
     <logger name="io.micronaut.flyway" level="INFO"/>
 
