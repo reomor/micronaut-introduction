@@ -10,60 +10,65 @@
         </encoder>
     </appender>
 
-    <appender name="STASH" class="net.logstash.logback.appender.LogstashTcpSocketAppender">
-        <keepAliveDuration>5 minutes</keepAliveDuration>
-        <reconnectionDelay>10 second</reconnectionDelay>
-        <ringBufferSize>16384</ringBufferSize>
-        <destination>127.0.0.1:9601</destination>
-        <connectionStrategy>
-            <preferPrimary>
-                <secondaryConnectionTTL>5 minutes</secondaryConnectionTTL>
-            </preferPrimary>
-        </connectionStrategy>
-        <encoder class="net.logstash.logback.encoder.LoggingEventCompositeJsonEncoder">
-            <providers>
-                <timestamp>
-                    <timeZone>UTC</timeZone>
-                </timestamp>
-                <mdc>
-                    <excludeMdcKeyName>X-B3-SpanId</excludeMdcKeyName>
-                    <excludeMdcKeyName>X-B3-TraceId</excludeMdcKeyName>
-                    <excludeMdcKeyName>X-Span-Export</excludeMdcKeyName>
-                </mdc>
-                <logLevel/>
-                <loggerName/>
-                <threadName/>
-                <message/>
-                <logstashMarkers/>
-                <arguments/>
+<!--    works in JVM mode, but not in native -->
+<!--    <appender name="STASH" class="net.logstash.logback.appender.LogstashTcpSocketAppender">-->
+<!--        <keepAliveDuration>5 minutes</keepAliveDuration>-->
+<!--        <reconnectionDelay>10 second</reconnectionDelay>-->
+<!--        <ringBufferSize>16384</ringBufferSize>-->
+<!--        <destination>127.0.0.1:9601</destination>-->
+<!--        <connectionStrategy>-->
+<!--            <preferPrimary>-->
+<!--                <secondaryConnectionTTL>5 minutes</secondaryConnectionTTL>-->
+<!--            </preferPrimary>-->
+<!--        </connectionStrategy>-->
+<!--        <encoder class="net.logstash.logback.encoder.LoggingEventCompositeJsonEncoder">-->
+<!--            <providers>-->
+<!--                <timestamp>-->
+<!--                    <timeZone>UTC</timeZone>-->
+<!--                </timestamp>-->
+<!--                <mdc>-->
+<!--                    <excludeMdcKeyName>X-B3-SpanId</excludeMdcKeyName>-->
+<!--                    <excludeMdcKeyName>X-B3-TraceId</excludeMdcKeyName>-->
+<!--                    <excludeMdcKeyName>X-Span-Export</excludeMdcKeyName>-->
+<!--                </mdc>-->
+<!--                <logLevel/>-->
+<!--                <loggerName/>-->
+<!--                <threadName/>-->
+<!--                <message/>-->
+<!--                <logstashMarkers/>-->
+<!--                <arguments/>-->
 
-                <stackTrace>
-                    <fieldName>stackTrace</fieldName>
-                    <throwableConverter class="net.logstash.logback.stacktrace.ShortenedThrowableConverter">
-                        <inlineHash>true</inlineHash>
-                        <exclusions>${STE_EXCLUSIONS}</exclusions>
-                    </throwableConverter>
-                </stackTrace>
-                <stackHash>
-                    <exclusions>${STE_EXCLUSIONS}</exclusions>
-                </stackHash>
-                <pattern>
-                    <pattern>
-                        {
-                            "customParam": "paramValue"
-                        }
-                    </pattern>
-                </pattern>
-            </providers>
-        </encoder>
-    </appender>
+<!--                <stackTrace>-->
+<!--                    <fieldName>stackTrace</fieldName>-->
+<!--                    <throwableConverter class="net.logstash.logback.stacktrace.ShortenedThrowableConverter">-->
+<!--                        <inlineHash>true</inlineHash>-->
+<!--                        <exclusions>${STE_EXCLUSIONS}</exclusions>-->
+<!--                    </throwableConverter>-->
+<!--                </stackTrace>-->
+<!--                <stackHash>-->
+<!--                    <exclusions>${STE_EXCLUSIONS}</exclusions>-->
+<!--                </stackHash>-->
+<!--                <pattern>-->
+<!--                    <pattern>-->
+<!--                        {-->
+<!--                            "customParam": "paramValue"-->
+<!--                        }-->
+<!--                    </pattern>-->
+<!--                </pattern>-->
+<!--            </providers>-->
+<!--        </encoder>-->
+<!--    </appender>-->
 
-    <appender name="ACCESS_STASH" class="net.logstash.logback.appender.LogstashAccessTcpSocketAppender">
-        <destination>127.0.0.1:9601</destination>
-        <encoder class="net.logstash.logback.encoder.LogstashAccessEncoder" />
-    </appender>
+<!--    <appender name="ACCESS_STASH" class="net.logstash.logback.appender.LogstashAccessTcpSocketAppender">-->
+<!--        <destination>127.0.0.1:9601</destination>-->
+<!--        <encoder class="net.logstash.logback.encoder.LogstashAccessEncoder" />-->
+<!--    </appender>-->
 
-    <root level="DEBUG">
+    <logger name="com.example" level="DEBUG"/>
+    <logger name="org.flywaydb.core" level="INFO"/>
+    <logger name="io.micronaut.flyway" level="INFO"/>
+
+    <root level="INFO">
         <appender-ref ref="STDOUT"/>
 <!--        <appender-ref ref="STASH"/>-->
 <!--        <appender-ref ref="ACCESS_STASH"/>-->

@@ -74,6 +74,16 @@
             <scope>runtime</scope>
         </dependency>
 
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <scope>runtime</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.micronaut.flyway</groupId>
+            <artifactId>micronaut-flyway</artifactId>
+        </dependency>
+
         <!-- logstash -->
         <dependency>
             <groupId>ch.qos.logback</groupId>
@@ -102,8 +112,7 @@
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <version>${lombok.version}</version>
-            <scope>compile</scope>
-            <optional>true</optional>
+            <scope>provided</scope>
         </dependency>
 
         <dependency>
