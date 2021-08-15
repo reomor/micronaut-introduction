@@ -8,8 +8,6 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import java.util.Objects;
 
-@Getter
-@Setter
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
@@ -20,6 +18,14 @@ public class SymbolEntity {
     @Id
     @Column(name = "name")
     private String name;
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 
     @Override
     public boolean equals(Object o) {

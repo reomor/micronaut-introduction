@@ -96,6 +96,257 @@
 			"response": []
 		},
 		{
+			"name": "http://localhost:8080/quotes/jpa",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJteXVzZXIiLCJuYmYiOjE2MjkwNTE2NTAsInJvbGVzIjpbXSwiaXNzIjoibWFpbi1hcHAiLCJleHAiOjE2MjkwNTUyNTAsImlhdCI6MTYyOTA1MTY1MH0.HHHpGFkQj906KjYDp1hmfDNPgt2dfTEwn_i2E7y7doI",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/quote/jpa",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"quote",
+						"jpa"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8080/quote/jpa/1",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJteXVzZXIiLCJuYmYiOjE2MjkwNTE2NTAsInJvbGVzIjpbXSwiaXNzIjoibWFpbi1hcHAiLCJleHAiOjE2MjkwNTUyNTAsImlhdCI6MTYyOTA1MTY1MH0.HHHpGFkQj906KjYDp1hmfDNPgt2dfTEwn_i2E7y7doI",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/quote/jpa/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"quote",
+						"jpa",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8080/quote/jpa/symbol/IBM",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJteXVzZXIiLCJuYmYiOjE2MjkwNTE2NTAsInJvbGVzIjpbXSwiaXNzIjoibWFpbi1hcHAiLCJleHAiOjE2MjkwNTUyNTAsImlhdCI6MTYyOTA1MTY1MH0.HHHpGFkQj906KjYDp1hmfDNPgt2dfTEwn_i2E7y7doI",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/quote/jpa/symbol/IBM",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"quote",
+						"jpa",
+						"symbol",
+						"IBM"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8080/quote/jpa/list/desc",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJteXVzZXIiLCJuYmYiOjE2MjkwNTE2NTAsInJvbGVzIjpbXSwiaXNzIjoibWFpbi1hcHAiLCJleHAiOjE2MjkwNTUyNTAsImlhdCI6MTYyOTA1MTY1MH0.HHHpGFkQj906KjYDp1hmfDNPgt2dfTEwn_i2E7y7doI",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/quote/jpa/list/desc",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"quote",
+						"jpa",
+						"list",
+						"desc"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8080/quote/jpa/list/filter?volume=50.0",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJteXVzZXIiLCJuYmYiOjE2MjkwNTE2NTAsInJvbGVzIjpbXSwiaXNzIjoibWFpbi1hcHAiLCJleHAiOjE2MjkwNTUyNTAsImlhdCI6MTYyOTA1MTY1MH0.HHHpGFkQj906KjYDp1hmfDNPgt2dfTEwn_i2E7y7doI",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/quote/jpa/list/filter?volume=0",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"quote",
+						"jpa",
+						"list",
+						"filter"
+					],
+					"query": [
+						{
+							"key": "volume",
+							"value": "0"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8080/quote/jpa/list/paginationWithFilter?volume=20&page=0&size=1",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJteXVzZXIiLCJuYmYiOjE2MjkwNTE2NTAsInJvbGVzIjpbXSwiaXNzIjoibWFpbi1hcHAiLCJleHAiOjE2MjkwNTUyNTAsImlhdCI6MTYyOTA1MTY1MH0.HHHpGFkQj906KjYDp1hmfDNPgt2dfTEwn_i2E7y7doI",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/quote/jpa/list/paginationWithFilter?volume=20&page=0&size=1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"quote",
+						"jpa",
+						"list",
+						"paginationWithFilter"
+					],
+					"query": [
+						{
+							"key": "volume",
+							"value": "20"
+						},
+						{
+							"key": "page",
+							"value": "0"
+						},
+						{
+							"key": "size",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8080/quote/jpa/list/pagination?page=0&size=1",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJteXVzZXIiLCJuYmYiOjE2MjkwNTE2NTAsInJvbGVzIjpbXSwiaXNzIjoibWFpbi1hcHAiLCJleHAiOjE2MjkwNTUyNTAsImlhdCI6MTYyOTA1MTY1MH0.HHHpGFkQj906KjYDp1hmfDNPgt2dfTEwn_i2E7y7doI",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/quote/jpa/list/pagination?page=0&size=1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"quote",
+						"jpa",
+						"list",
+						"pagination"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "0"
+						},
+						{
+							"key": "size",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "http://localhost:8080/login",
 			"request": {
 				"method": "POST",

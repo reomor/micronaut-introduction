@@ -37,8 +37,10 @@ datasources:
     dialect: POSTGRES
 jpa:
   default:
+    entity-scan:
+      packages: 'com.github.reomor.jpa.entity'
     packages-to-scan:
-      - "com.github.reomor"
+      - 'com.github.reomor'
     properties:
       hibernate:
         show_sql: false
