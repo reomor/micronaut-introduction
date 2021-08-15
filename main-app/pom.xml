@@ -23,6 +23,7 @@
         <exec.mainClass>com.github.reomor.MainApplication</exec.mainClass>
         <micronaut.runtime>netty</micronaut.runtime>
         <assertj-core.version>3.20.2</assertj-core.version>
+        <micronaut.openapi.version>2.6.0</micronaut.openapi.version>
     </properties>
 
     <repositories>
@@ -56,6 +57,16 @@
         <dependency>
             <groupId>io.micronaut</groupId>
             <artifactId>micronaut-runtime</artifactId>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.micronaut.data</groupId>
+            <artifactId>micronaut-data-hibernate-jpa</artifactId>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.micronaut.sql</groupId>
+            <artifactId>micronaut-hibernate-jpa</artifactId>
             <scope>compile</scope>
         </dependency>
         <dependency>
@@ -156,6 +167,7 @@
 
     <build>
         <plugins>
+
             <plugin>
                 <groupId>io.micronaut.build</groupId>
                 <artifactId>micronaut-maven-plugin</artifactId>
@@ -179,9 +191,24 @@
                             <version>${micronaut.version}</version>
                         </path>
                         <path>
+                            <groupId>io.micronaut</groupId>
+                            <artifactId>micronaut-validation</artifactId>
+                            <version>${micronaut.version}</version>
+                        </path>
+                        <path>
+                            <groupId>io.micronaut.data</groupId>
+                            <artifactId>micronaut-data-hibernate-jpa</artifactId>
+                            <version>${micronaut.data.version}</version>-->
+                        </path>
+<!--                        <path>-->
+<!--                            <groupId>io.micronaut.data</groupId>-->
+<!--                            <artifactId>micronaut-data-processor</artifactId>-->
+<!--                            <version>${micronaut.data.version}</version>-->
+<!--                        </path>-->
+                        <path>
                             <groupId>io.micronaut.openapi</groupId>
                             <artifactId>micronaut-openapi</artifactId>
-                            <version>2.6.0</version>
+                            <version>${micronaut.openapi.version}</version>
                         </path>
                     </annotationProcessorPaths>
                     <fork>true</fork>

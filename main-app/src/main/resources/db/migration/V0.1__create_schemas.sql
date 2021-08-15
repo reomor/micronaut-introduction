@@ -1,6 +1,6 @@
 CREATE TABLE symbols
 (
-    VALUE VARCHAR PRIMARY KEY
+    name VARCHAR PRIMARY KEY
 );
 
 CREATE TABLE quotes
@@ -11,7 +11,7 @@ CREATE TABLE quotes
     last_price NUMERIC,
     volume NUMERIC,
     symbol VARCHAR,
-    FOREIGN KEY (symbol) REFERENCES symbols(value),
+    FOREIGN KEY (symbol) REFERENCES symbols(name),
     CONSTRAINT last_price_is_positive CHECK ( last_price > 0 ),
     CONSTRAINT volume_is_positive_or_zero CHECK ( volume >= 0 )
 )

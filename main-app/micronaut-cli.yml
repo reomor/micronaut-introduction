@@ -3,4 +3,4 @@ defaultPackage: com.github.reomor
 testFramework: junit
 sourceLanguage: java
 buildTool: maven
-features: [annotation-api, app-name, graalvm, http-client, java, java-application, jdbc-hikari, junit, openapi, logback, maven, netty-server, readme, security-jwt, shade, yaml]
+features: [annotation-api, app-name, data, data-jpa, graalvm, hibernate-jpa, http-client, java, java-application, jdbc-hikari, junit, openapi, logback, maven, netty-server, readme, security-jwt, shade, yaml]

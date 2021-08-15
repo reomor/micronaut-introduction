@@ -1,4 +1,4 @@
-package com.github.reomor.init;
+package com.github.reomor.jpa.init;
 
 import com.github.reomor.jpa.entity.UserEntity;
 import com.github.reomor.jpa.repository.UserRepository;
