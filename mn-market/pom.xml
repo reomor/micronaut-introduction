@@ -4,7 +4,7 @@
 
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.github.reomor</groupId>
-    <artifactId>main-app</artifactId>
+    <artifactId>mn-market</artifactId>
     <version>0.1</version>
     <packaging>${packaging}</packaging>
 
@@ -212,7 +212,7 @@
                     <compilerArgs>
                         <arg>-J-Dmicronaut.openapi.views.spec=rapidoc.enabled=true,redoc.enabled=true,swagger-ui.enabled=true,swagger-ui.theme=flattop</arg>
                         <arg>-Amicronaut.processing.group=com.github.reomor</arg>
-                        <arg>-Amicronaut.processing.module=main-app</arg>
+                        <arg>-Amicronaut.processing.module=mn-market</arg>
                     </compilerArgs>
                 </configuration>
             </plugin>

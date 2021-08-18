@@ -1,6 +1,6 @@
 micronaut:
   application:
-    name: main-app
+    name: mn-market
   server:
     port: 8080
   router:
