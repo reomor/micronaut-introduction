@@ -1,0 +1,7 @@
+micronaut:
+  application:
+    name: mnmessaging
+kafka:
+  bootstrap:
+    servers:
+      - localhost:9092
