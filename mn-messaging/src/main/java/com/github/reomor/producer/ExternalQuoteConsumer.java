@@ -3,20 +3,21 @@ package com.github.reomor.producer;
 import com.github.reomor.domain.ExternalQuote;
 import com.github.reomor.domain.PriceUpdate;
 import io.micronaut.configuration.kafka.annotation.KafkaListener;
+import io.micronaut.configuration.kafka.annotation.OffsetReset;
 import io.micronaut.configuration.kafka.annotation.Topic;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 import static com.github.reomor.producer.Topic.EXTERNAL_QUOTES;
-import static java.util.stream.Collectors.*;
+import static java.util.stream.Collectors.toList;
 
 @KafkaListener(
   clientId = "mn-pricing-external-quote-consumer",
   groupId = "external-quote-consumer",
-  batch = true
+  batch = true,
+  offsetReset = OffsetReset.EARLIEST
 )
 public class ExternalQuoteConsumer {
 

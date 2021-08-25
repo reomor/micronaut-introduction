@@ -1,17 +1,13 @@
 package com.github.reomor;
 
 import com.github.reomor.domain.ExternalQuote;
-import com.github.reomor.producer.ExternalQuoteProducer;
-import io.micronaut.configuration.kafka.annotation.KafkaListener;
-import io.micronaut.configuration.kafka.annotation.OffsetReset;
-import io.micronaut.configuration.kafka.annotation.Topic;
+import com.github.reomor.domain.PriceUpdate;
+import io.micronaut.configuration.kafka.annotation.*;
 import io.micronaut.context.ApplicationContext;
 import io.micronaut.context.annotation.Requires;
 import io.micronaut.context.env.Environment;
 import io.micronaut.core.util.CollectionUtils;
-import io.micronaut.core.util.StreamUtils;
 import io.micronaut.core.util.StringUtils;
-import jakarta.inject.Singleton;
 import org.awaitility.Awaitility;
 import org.junit.Rule;
 import org.junit.jupiter.api.AfterAll;
@@ -24,19 +20,19 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 import org.testcontainers.utility.DockerImageName;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.IntStream;
 
 import static com.github.reomor.producer.Topic.EXTERNAL_QUOTES;
+import static com.github.reomor.producer.Topic.PRICE_UPDATE;
 import static com.github.reomor.util.RandomUtils.randomValue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @Testcontainers
-class TestExternalQuoteProducer {
+class TestExternalQuoteConsumer {
 
-    private static final Logger log = LoggerFactory.getLogger(TestExternalQuoteProducer.class);
-    public static final String PROPERTY_NAME = "TestExternalQuoteProducer";
+    private static final Logger log = LoggerFactory.getLogger(TestExternalQuoteConsumer.class);
+    public static final String PROPERTY_NAME = "TestExternalQuoteConsumer";
     private static ApplicationContext context;
 
     @Rule
@@ -65,12 +61,9 @@ class TestExternalQuoteProducer {
     }
 
     @Test
-    void produce10Records() {
-
-        int size = 10;
-        ExternalQuoteObserver observer = context.getBean(ExternalQuoteObserver.class);
-        ExternalQuoteProducer producer = context.getBean(ExternalQuoteProducer.class);
-
+    void consuming() {
+        int size = 4;
+        TestExternalQuoteProducer producer = context.getBean(TestExternalQuoteProducer.class);
         IntStream.range(0, size)
           .forEach(index -> {
                 String symbol = "TEST-" + index;
@@ -83,24 +76,38 @@ class TestExternalQuoteProducer {
                 );
             }
           );
-
+        PriceUpdateObserver observer = context.getBean(PriceUpdateObserver.class);
         Awaitility.await().untilAsserted(() -> {
-            assertEquals(size, observer.inspected.size());
+            assertEquals(4, observer.inspected.size());
         });
     }
 
-    @Singleton
+    @KafkaListener(
+      clientId = "price-update-observer",
+      offsetReset = OffsetReset.EARLIEST
+    )
     @Requires(env = Environment.TEST)
     @Requires(property = PROPERTY_NAME, value = StringUtils.TRUE)
-    static class ExternalQuoteObserver {
+    static class PriceUpdateObserver {
 
-        List<ExternalQuote> inspected = new ArrayList<>();
+        List<PriceUpdate> inspected = new ArrayList<>();
 
         @KafkaListener(offsetReset = OffsetReset.EARLIEST)
-        @Topic(EXTERNAL_QUOTES)
-        void receive(ExternalQuote quote) {
-            log.debug("Consumed: {}", quote);
-            inspected.add(quote);
+        @Topic(PRICE_UPDATE)
+        void receive(List<PriceUpdate> priceUpdates) {
+            log.debug("Consumed: {}", priceUpdates);
+            inspected.addAll(priceUpdates);
         }
+    }
+
+    @KafkaClient(
+      id = "external-quote-producer"
+    )
+    @Requires(env = Environment.TEST)
+    @Requires(property = PROPERTY_NAME, value = StringUtils.TRUE)
+    public interface TestExternalQuoteProducer {
+
+        @Topic(EXTERNAL_QUOTES)
+        void send(@KafkaKey String symbol, ExternalQuote externalQuote);
     }
 }
