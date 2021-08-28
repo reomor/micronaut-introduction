@@ -1,0 +1,31 @@
+version: '3.7'
+
+services:
+  mn-mysql:
+    image: mysql:8.0
+    ports:
+      - "13306:3306"
+    networks:
+      - testservice
+    environment:
+      MYSQL_ROOT_PASSWORD: secret
+      MYSQL_PASSWORD: secret
+      MYSQL_DATABASE: mn-fund
+  mn-fund:
+    image: mn-fund:latest
+    ports:
+      - "8082:8082"
+    networks:
+      - testservice
+    #    environment:
+    deploy:
+      resources:
+        limits:
+          memory: 256M
+    depends_on:
+      - mn-mysql
+
+networks:
+  testservice:
+    external: true
+    name: testservice

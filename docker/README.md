@@ -22,7 +22,7 @@ docker run --name mn-mysql -e MYSQL_ROOT_PASSWORD=secret -e MYSQL_PASSWORD=secre
 ### Kafka
 
 [docker-compose.yml](https://github.com/lensesio/fast-data-dev)
-
+lensesio/fast-data-dev:2.2
 ```shell
 docker-compose up -d
 ```
@@ -30,4 +30,23 @@ docker-compose up -d
 Lenses.io
 ```shell
 docker run -e ADV_HOST=127.0.0.1 -e EULA="https://licenses.lenses.io/download/lensesdl?id=ID" --rm -p 3030:3030 -p 9092:9092 lensesio/box
+```
+
+### Native
+
+build
+
+```shell
+cd mn-fund
+docker build -t mn-fund .
+```
+
+run service
+
+```shell
+cd docker
+docker network create -d overlay testservice
+docker stack deploy -c mn-fund.stack.yml mn-fund-stack
+docker stats
+docker stack rm mn-fund-stack
 ```
