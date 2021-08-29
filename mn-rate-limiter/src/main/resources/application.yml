@@ -1,0 +1,9 @@
+micronaut:
+  application:
+    name: mnratelimiter
+  server:
+    port: 8181
+redis:
+  uri: redis://localhost
+  ssl: false
+  timeout: 30s

@@ -50,3 +50,9 @@ docker stack deploy -c mn-fund.stack.yml mn-fund-stack
 docker stats
 docker stack rm mn-fund-stack
 ```
+
+### Redis
+
+```shell
+docker run --name mn-redis -p 6379:6379 -d redis:6-alpine
+```
