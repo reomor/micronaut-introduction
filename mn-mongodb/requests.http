@@ -1,0 +1,11 @@
+GET http://localhost:8080/prices
+
+###
+
+POST http://localhost:8080/prices
+Content-Type: application/json
+
+{
+    "last_price": 1234,
+    "volume": 1
+}

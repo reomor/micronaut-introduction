@@ -56,3 +56,9 @@ docker stack rm mn-fund-stack
 ```shell
 docker run --name mn-redis -p 6379:6379 -d redis:6-alpine
 ```
+
+### MongoDB
+
+```shell
+docker run --name mn-mogodb -p 27017:27017 mongo:4.4
+```
