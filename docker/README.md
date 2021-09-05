@@ -62,3 +62,9 @@ docker run --name mn-redis -p 6379:6379 -d redis:6-alpine
 ```shell
 docker run --name mn-mogodb -p 27017:27017 mongo:4.4
 ```
+
+### Elasticsearch cluster
+
+```shell
+docker run --name mn-elastic-search -p 9200:9200 -p 9300:9300 -e "discovery.type=single-node" docker.elastic.co/elasticsearch/elasticsearch:7.14.1
+```
